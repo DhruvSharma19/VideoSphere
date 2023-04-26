@@ -19,7 +19,6 @@ import {auth} from "../firebase";
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import logoImg from "../images/logo.png";
 import { useDispatch, useSelector } from "react-redux";
 import LogoutIcon from '@mui/icons-material/Logout';
 import { signOut } from "firebase/auth";
@@ -165,7 +164,7 @@ const Menu = ({ darkMode, setDarkMode }) => {
       <Wrapper>
         <Link to="random" style={{ textDecoration: "none", color: "inherit" }}>
           <Logo>
-            <Img src={logoImg}></Img>
+            <Img src={"/images/logo.png"}></Img>
             YouTube
           </Logo>
         </Link>

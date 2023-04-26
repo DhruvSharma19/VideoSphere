@@ -20,28 +20,26 @@ const Container = styled.div`
   flex-wrap: wrap;
   gap: 10px;
   min-height: calc(100vh - 56px);
-  overflow-y:scroll;
+  overflow-y: scroll;
   animation: fadein 0.3s;
-  ::-webkit-scrollbar{
-    width:5px;
+  ::-webkit-scrollbar {
+    width: 5px;
   }
 
-  @media (max-width:768px){
-    flex-direction:column;
+  @media (max-width: 768px) {
+    flex-direction: column;
   }
 `;
 
 const Content = styled.div`
   flex: 5;
   padding: 20px;
-  
-
   box-sizing: border-box;
-  display:flex;
-  flex-direction:column;
-  flex-wrap:wrap;
-  overflow:hidden;
-  align-items:center;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  overflow: hidden;
+  align-items: center;
 `;
 const VideoWrapper = styled.div`
   border-radius: 20px;
@@ -51,8 +49,7 @@ const VideoWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  width:100%;
-
+  width: 100%;
 
   @media (max-width: 468px) {
     width: 80vw;
@@ -65,7 +62,7 @@ const Title = styled.h1`
   margin-top: 20px;
   margin-bottom: 10px;
   color: ${({ theme }) => theme.text};
-  width:100%;
+  width: 100%;
 
   @media (max-width: 468px) {
     font-size: 20px;
@@ -79,7 +76,7 @@ const Details = styled.div`
   box-sizing: border-box;
   flex-wrap: wrap;
   gap: 10px;
-  width:100%;
+  width: 100%;
 `;
 
 const Info = styled.span`
@@ -110,7 +107,7 @@ const Channel = styled.div`
   justify-content: space-between;
   flex-wrap: wrap;
   gap: 10px;
-  width:100%;
+  width: 100%;
 `;
 
 const ChannelInfo = styled.div`
@@ -177,9 +174,6 @@ const Video = () => {
 
   const dispatch = useDispatch();
 
-
-  
-
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -196,90 +190,118 @@ const Video = () => {
       }
     };
     fetchData();
-    
   }, [path, dispatch]);
 
   const handleLike = async () => {
-    await axios.put(`/users/like/${currentVideo._id}`);
-    dispatch(like(currentUser._id));
+    try {
+      await axios.put(`/users/like/${currentVideo._id}`);
+      dispatch(like(currentUser._id));
+    } catch (err) {
+      console.log(err);
+    }
   };
   const handleDislike = async () => {
-    await axios.put(`/users/dislike/${currentVideo._id}`);
-    dispatch(dislike(currentUser._id));
+    try {
+      await axios.put(`/users/dislike/${currentVideo._id}`);
+      dispatch(dislike(currentUser._id));
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   const handleSub = async () => {
-    currentUser.subscribedUsers.includes(channel._id)
-      ? await axios.put(`/users/unsub/${channel._id}`)
-      : await axios.put(`/users/sub/${channel._id}`);
-    dispatch(subscription(channel._id));
+    try {
+      currentUser.subscribedUsers.includes(channel._id)
+        ? await axios.put(`/users/unsub/${channel._id}`)
+        : await axios.put(`/users/sub/${channel._id}`);
+      dispatch(subscription(channel._id));
+    } catch (err) {
+      console.log(err);
+    }
   };
 
-  //TO DO: DELETE VIDEO FUNCTIONALITY
-  if (currentVideo) {
-    return (
-      <Container>
-        <Content>
-          <VideoWrapper>
-            <VideoFrame src={currentVideo.videoUrl || "/images/thumbnail.svg"} controls />
-          </VideoWrapper>
-          <Title>{currentVideo.title}</Title>
-          <Details>
-            <Info>
-              {currentVideo.views} views • {format(currentVideo.createdAt)}
-            </Info>
-            <Buttons>
-              <Button onClick={handleLike}>
-                {currentVideo.likes?.includes(currentUser?._id) ? (
-                  <ThumbUpIcon />
-                ) : (
-                  <ThumbUpOutlinedIcon />
-                )}{" "}
-                {currentVideo.likes?.length}
-              </Button>
-              <Button onClick={handleDislike}>
-                {currentVideo.dislikes?.includes(currentUser?._id) ? (
-                  <ThumbDownIcon />
-                ) : (
-                  <ThumbDownOffAltOutlinedIcon />
-                )}{" "}
-                Dislike
-              </Button>
-              <Button>
-                <ReplyOutlinedIcon /> Share
-              </Button>
-              <Button>
-                <AddTaskOutlinedIcon /> Save
-              </Button>
-            </Buttons>
-          </Details>
-          <Hr />
-          <Channel>
-            <ChannelInfo>
-              <Image src={channel.img || "/images/profile.svg"} />
-              <ChannelDetail>
-              <Link to={`/profile/${channel._id}`} style={{ textDecoration: "none", color: "inherit" }}>
-                 <ChannelName>{channel.name}</ChannelName>
+  return (
+    <Container>
+      <Content>
+        <VideoWrapper>
+          <VideoFrame
+            src={currentVideo?.videoUrl || "/images/thumbnail.svg"}
+            controls
+          />
+        </VideoWrapper>
+        <Title>{currentVideo?.title}</Title>
+        <Details>
+          <Info>
+            {currentVideo?.views} views • {format(currentVideo?.createdAt)}
+          </Info>
+          <Buttons>
+            <Button onClick={handleLike}>
+              {currentVideo?.likes?.includes(currentUser?._id) ? (
+                <ThumbUpIcon />
+              ) : (
+                <ThumbUpOutlinedIcon />
+              )}{" "}
+              {currentVideo?.likes?.length}
+            </Button>
+            <Button onClick={handleDislike}>
+              {currentVideo?.dislikes?.includes(currentUser?._id) ? (
+                <ThumbDownIcon />
+              ) : (
+                <ThumbDownOffAltOutlinedIcon />
+              )}{" "}
+              Dislike
+            </Button>
+            <Button>
+              <ReplyOutlinedIcon /> Share
+            </Button>
+            <Button>
+              <AddTaskOutlinedIcon /> Save
+            </Button>
+          </Buttons>
+        </Details>
+        <Hr />
+        <Channel>
+          <ChannelInfo>
+            <Image src={channel.img || "/images/profile.svg"} />
+            <ChannelDetail>
+              <Link
+                to={`/profile/${channel._id}`}
+                style={{ textDecoration: "none", color: "inherit" }}
+              >
+                <ChannelName>{channel.name}</ChannelName>
               </Link>
-                <ChannelCounter>
-                  {channel.subscribers} subscribers
-                </ChannelCounter>
-                <Description>{currentVideo.desc}</Description>
-              </ChannelDetail>
-            </ChannelInfo>
-            <Subscribe onClick={handleSub} style={{backgroundColor:currentUser?.subscribedUsers?.includes(channel?._id) ? "white" : "red",color:currentUser?.subscribedUsers?.includes(channel?._id) ? "red" : "white"}}>
+              <ChannelCounter>{channel.subscribers} subscribers</ChannelCounter>
+              <Description>{currentVideo?.desc}</Description>
+            </ChannelDetail>
+          </ChannelInfo>
+          {currentUser ? (
+            <Subscribe
+              onClick={handleSub}
+              style={{
+                backgroundColor: currentUser?.subscribedUsers?.includes(
+                  channel?._id
+                )
+                  ? "white"
+                  : "red",
+                color: currentUser?.subscribedUsers?.includes(channel?._id)
+                  ? "red"
+                  : "white",
+              }}
+            >
               {currentUser?.subscribedUsers?.includes(channel._id)
                 ? "SUBSCRIBED"
                 : "SUBSCRIBE"}
             </Subscribe>
-          </Channel>
-          <Hr />
-          <Comments videoId={currentVideo._id} />
-        </Content>
-        <Recommendation tags={currentVideo.tags} />
-      </Container>
-    );
-  }
+          ) : (
+            ""
+          )}
+        </Channel>
+        <Hr />
+        <Comments videoId={currentVideo?._id} />
+      </Content>
+      <Recommendation tags={currentVideo?.tags} />
+    </Container>
+  );
 };
 
 export default Video;

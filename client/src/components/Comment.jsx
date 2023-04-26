@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { format } from "timeago.js";
 import { deleteComment } from "../redux/commentSlice";
@@ -13,13 +13,10 @@ const Container = styled.div`
   animation: fadein 0.3s;
 `;
 
-
-
 const Avatar = styled.img`
   width: 50px;
   height: 50px;
   border-radius: 50%;
-  
 `;
 
 const Details = styled.div`
@@ -42,39 +39,36 @@ const Date = styled.span`
 
 const Text = styled.span`
   font-size: 16px;
-
 `;
 
-const More=styled.div`
+const More = styled.div`
   position: absolute;
   right: 10px;
   top: 10px;
   width: 25px;
   height: 25px;
-  
+
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
   border-radius: 50%;
-  
 
-
-  :hover{
+  :hover {
     background-color: gray;
   }
 
-  img{
+  img {
     width: 20px;
     height: 20px;
     cursor: pointer;
   }
-  
-  div{
+
+  div {
     display: none;
     position: absolute;
     right: 15px;
-    top:15px;
+    top: 15px;
     box-sizing: border-box;
     padding: 5px;
     font-size: 15px;
@@ -82,49 +76,53 @@ const More=styled.div`
     font-weight: bold;
     background-color: gray;
     border-radius: 10px;
-
   }
 
-  :hover{
-    div{
+  :hover {
+    div {
       display: flex;
     }
   }
 `;
 
 const Comment = ({ comment }) => {
+  const { currentUser } = useSelector((state) => state.user);
   const [channel, setChannel] = useState({});
-  const dispatch=useDispatch();
+  const dispatch = useDispatch();
 
-  
-  const handleComment=async()=>{
-    try{
-
+  const handleComment = async () => {
+    try {
       await axios.delete(`/comments/${comment._id}`);
       dispatch(deleteComment(comment._id));
-    }
-    catch(err){
+    } catch (err) {
       console.log(err);
     }
+  };
 
-  }
+  const fetchComment = async () => {
+    try {
+      const res = await axios.get(`/users/find/${comment.userId}`);
+      setChannel(res.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   useEffect(() => {
-    const fetchComment = async () => {
-      const res = await axios.get(`/users/find/${comment.userId}`);
-      setChannel(res.data)
-    };
     fetchComment();
   }, [comment.userId]);
 
   return (
-
     <Container>
       <Avatar src={channel?.img || "/images/profile.svg"} />
-      <More>
-        <img src="/images/more.svg" alt="" />
-        <div  onClick={handleComment}>Delete</div>
-      </More>
+      {currentUser ? (
+        <More>
+          <img src="/images/more.svg" alt="" />
+          <div onClick={handleComment}>Delete</div>
+        </More>
+      ) : (
+        ""
+      )}
       <Details>
         <Name>
           {channel?.name} <Date>{format(comment.createdAt)}</Date>

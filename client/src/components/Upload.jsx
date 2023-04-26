@@ -10,8 +10,6 @@ import app from "../firebase";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-
-
 const Container = styled.div`
   position: absolute;
   top: 0;
@@ -39,16 +37,15 @@ const Wrapper = styled.div`
   position: relative;
   border-radius: 20px;
 
-  img{
+  img {
     width: 70px;
     height: 70px;
     cursor: pointer;
   }
 
-  @media (max-width:480px){
+  @media (max-width: 480px) {
     width: 80vw;
   }
-
 `;
 const Close = styled.div`
   position: absolute;
@@ -58,9 +55,9 @@ const Close = styled.div`
 `;
 const Title = styled.h1`
   text-align: center;
-  font-weight:bold;
-  @media (max-width:480px){
-   font-size:30px;
+  font-weight: bold;
+  @media (max-width: 480px) {
+    font-size: 30px;
   }
 `;
 
@@ -78,21 +75,20 @@ const Input = styled.input`
   font-size: 20px;
   display: none;
 
-  &:hover{
-    cursor:pointer;
+  &:hover {
+    cursor: pointer;
   }
 `;
 const Desc = styled.textarea`
-width: 100%;
-border-radius: 20px;
-box-sizing: border-box;
-padding: 10px;
-font-size: 20px;
+  width: 100%;
+  border-radius: 20px;
+  box-sizing: border-box;
+  padding: 10px;
+  font-size: 20px;
   border: 1px solid ${({ theme }) => theme.soft};
   color: ${({ theme }) => theme.text};
   background-color: transparent;
 `;
-
 
 const Button = styled.button`
   border-radius: 8px;
@@ -105,9 +101,7 @@ const Button = styled.button`
   color: ${({ theme }) => theme.textSoft};
   width: 100%;
 
-
-
-  &:hover{
+  &:hover {
     background-color: blue;
     color: ${({ theme }) => theme.text};
   }
@@ -121,8 +115,6 @@ const Label = styled.label`
   gap: 10px;
 `;
 
-
-
 const Upload = ({ setOpen }) => {
   const [img, setImg] = useState(undefined);
   const [video, setVideo] = useState(undefined);
@@ -131,7 +123,7 @@ const Upload = ({ setOpen }) => {
   const [inputs, setInputs] = useState({});
   const [tags, setTags] = useState([]);
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setInputs((prev) => {
@@ -145,7 +137,7 @@ const Upload = ({ setOpen }) => {
 
   const uploadFile = (file, urlType) => {
     const storage = getStorage(app);
-    const fileName = new Date().getTime() + file.name; 
+    const fileName = new Date().getTime() + file.name;
     const storageRef = ref(storage, fileName);
     const uploadTask = uploadBytesResumable(storageRef, file);
 
@@ -154,7 +146,9 @@ const Upload = ({ setOpen }) => {
       (snapshot) => {
         const progress =
           (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-        urlType === "imgUrl" ? setImgPerc(Math.round(progress)) : setVideoPerc(Math.round(progress));
+        urlType === "imgUrl"
+          ? setImgPerc(Math.round(progress))
+          : setVideoPerc(Math.round(progress));
         switch (snapshot.state) {
           case "paused":
             console.log("Upload is paused");
@@ -164,9 +158,11 @@ const Upload = ({ setOpen }) => {
             break;
           default:
             break;
-        } 
+        }
       },
-      (error) => {},
+      (error) => {
+        console.log(error);
+      },
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
           setInputs((prev) => {
@@ -178,28 +174,32 @@ const Upload = ({ setOpen }) => {
   };
 
   useEffect(() => {
-    video && uploadFile(video , "videoUrl"); 
+    video && uploadFile(video, "videoUrl");
   }, [video]);
 
   useEffect(() => {
     img && uploadFile(img, "imgUrl");
-  }, [img]); 
+  }, [img]);
 
-  const handleUpload = async (e)=>{
+  const handleUpload = async (e) => {
     e.preventDefault();
-    const res = await axios.post("/videos", {...inputs, tags})
-    setOpen(false)
-    res.status===200 && navigate(`/video/${res.data._id}`)
-  }
+    try {
+      const res = await axios.post("/videos", { ...inputs, tags });
+      setOpen(false);
+      res.status === 200 && navigate(`/video/${res.data._id}`);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   return (
     <Container>
       <Wrapper>
         <Close onClick={() => setOpen(false)}>X</Close>
         <Title>Upload a New Video</Title>
-        <Label htmlFor="video">Video:
-
-        <img src="/images/image.svg" alt="" />
+        <Label htmlFor="video">
+          Video:
+          <img src="/images/image.svg" alt="" />
         </Label>
         {videoPerc > 0 ? (
           "Uploading:" + videoPerc
@@ -223,13 +223,14 @@ const Upload = ({ setOpen }) => {
           rows={8}
           onChange={handleChange}
         />
-        
+
         <Input
           type="text"
           placeholder="Separate the tags with commas."
           onChange={handleTags}
         />
-        <Label htmlFor="image">Image:
+        <Label htmlFor="image">
+          Image:
           <img src="/images/image.svg" alt="" />
         </Label>
         {imgPerc > 0 ? (

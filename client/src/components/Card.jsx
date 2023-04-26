@@ -7,7 +7,6 @@ import axios from "axios";
 const Container = styled.div`
   width: 100%;
   cursor: pointer;
-
   display: flex;
   flex-direction: ${(props) => (props.type === "sm" ? "row" : "column")};
   gap: 10px;
@@ -25,22 +24,18 @@ const Container = styled.div`
     background-color: ${({ theme }) => theme.bgLighter};
   }
 
-  @media (max-width:480px){
-    width:calc(100vw - 40px);
+  @media (max-width: 480px) {
+    width: calc(100vw - 40px);
   }
-
-
 `;
 
 const Img = styled.img`
-  width: ${(props) => (props.type === "sm" ? "50%" : "100%")}; 
+  width: ${(props) => (props.type === "sm" ? "50%" : "100%")};
   height: ${(props) => (props.type === "sm" ? "100%" : "60%")};
   background-color: #999;
   border-radius: 10px;
   transition: all 1s ease;
- 
-
-  overflow:hidden;
+  overflow: hidden;
 `;
 
 const Details = styled.div`
@@ -92,22 +87,24 @@ const Major = styled.div`
 const Card = ({ type, video }) => {
   const [channel, setChannel] = useState({});
 
-
-  const handleView=async()=>{
-    try{
-      await axios.put("/videos/view/"+video._id);
-      
-    }
-    catch(err){
+  const handleView = async () => {
+    try {
+      await axios.put("/videos/view/" + video._id);
+    } catch (err) {
       console.log(err);
     }
-  }
+  };
 
-  useEffect(() => {
-    const fetchChannel = async () => {
+  const fetchChannel = async () => {
+    try {
       const res = await axios.get(`/users/find/${video.userId}`);
       setChannel(res.data);
-    };
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
     fetchChannel();
   }, [video.userId]);
 
@@ -120,10 +117,16 @@ const Card = ({ type, video }) => {
         <Img src={video.imgUrl} type={type} />
         <Details type={type}>
           <Texts>
-            <Title>{video.title.slice(0,40) + "..."}</Title>
+            <Title>{video.title.slice(0, 40) + "..."}</Title>
             <Major>
-              <ChannelImg type={type} src={channel.img || "/images/profile.svg"} />
-              <Link to={`/profile/${channel._id}`} style={{ textDecoration: "none", color: "inherit" }}>
+              <ChannelImg
+                type={type}
+                src={channel.img || "/images/profile.svg"}
+              />
+              <Link
+                to={`/profile/${channel._id}`}
+                style={{ textDecoration: "none", color: "inherit" }}
+              >
                 <ChannelName>{channel.name}</ChannelName>
               </Link>
             </Major>
