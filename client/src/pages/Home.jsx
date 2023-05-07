@@ -29,7 +29,7 @@ const Home = ({ type }) => {
 
   const fetchVideos = async () => {
     try {
-      const res = await axios.get(`/videos/${type}`);
+      const res = await axios.get(`https://youtube-yg41.onrender.com/api/videos/${type}`);
       setVideos(res.data);
     } catch (err) {
       console.log(err);

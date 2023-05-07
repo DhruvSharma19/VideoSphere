@@ -54,7 +54,7 @@ const Comments = ({ videoId }) => {
 
   const handleComment = async () => {
     try {
-      const res = await axios.post("/comments/", {
+      const res = await axios.post("https://youtube-yg41.onrender.com/api/comments/", {
         userId: currentUser._id,
         videoId: videoId,
         desc: text,
@@ -67,7 +67,7 @@ const Comments = ({ videoId }) => {
 
   const fetchComments = async () => {
     try {
-      const res = await axios.get(`/comments/${videoId}`);
+      const res = await axios.get(`https://youtube-yg41.onrender.com/api/comments/${videoId}`);
       dispatch(fetchSuccess(res.data));
     } catch (err) {
       console.log(err);

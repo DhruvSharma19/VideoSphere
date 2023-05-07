@@ -126,7 +126,7 @@ const SearchCard = ({ video }) => {
 
   const handleView = async () => {
     try {
-      await axios.put("/videos/view/" + video._id,{headers:{Authorization:"Bearer "+currentUser.jwt}});
+      await axios.put("https://youtube-yg41.onrender.com/api/videos/view/" + video._id,{headers:{Authorization:"Bearer "+currentUser.jwt}});
     } catch (err) {
       console.log(err);
     }
@@ -134,7 +134,7 @@ const SearchCard = ({ video }) => {
 
   useEffect(() => {
     const fetchChannel = async () => {
-      const res = await axios.get(`/users/find/${video.userId}`);
+      const res = await axios.get(`https://youtube-yg41.onrender.com/api/users/find/${video.userId}`);
       setChannel(res.data);
     };
     fetchChannel();

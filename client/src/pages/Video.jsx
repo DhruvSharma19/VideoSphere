@@ -177,9 +177,9 @@ const Video = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const videoRes = await axios.get(`/videos/find/${path}`);
+        const videoRes = await axios.get(`https://youtube-yg41.onrender.com/api/videos/find/${path}`);
         const channelRes = await axios.get(
-          `/users/find/${videoRes.data.userId}`
+          `https://youtube-yg41.onrender.com/api/users/find/${videoRes.data.userId}`
         );
 
         setChannel(channelRes.data);
@@ -194,7 +194,7 @@ const Video = () => {
 
   const handleLike = async () => {
     try {
-      await axios.put(`/users/like/${currentVideo._id}`,{headers:{Authorization:"Bearer "+currentUser.jwt}});
+      await axios.put(`https://youtube-yg41.onrender.com/api/users/like/${currentVideo._id}`,{headers:{Authorization:"Bearer "+currentUser.jwt}});
       dispatch(like(currentUser._id));
     } catch (err) {
       console.log(err);
@@ -202,7 +202,7 @@ const Video = () => {
   };
   const handleDislike = async () => {
     try {
-      await axios.put(`/users/dislike/${currentVideo._id}`,{headers:{Authorization:"Bearer "+currentUser.jwt}});
+      await axios.put(`https://youtube-yg41.onrender.com/api/users/dislike/${currentVideo._id}`,{headers:{Authorization:"Bearer "+currentUser.jwt}});
       dispatch(dislike(currentUser._id));
     } catch (err) {
       console.log(err);
@@ -212,8 +212,8 @@ const Video = () => {
   const handleSub = async () => {
     try {
       currentUser.subscribedUsers.includes(channel._id)
-        ? await axios.put(`/users/unsub/${channel._id}`,{headers:{Authorization:"Bearer "+currentUser.jwt}})
-        : await axios.put(`/users/sub/${channel._id}`,{headers:{Authorization:"Bearer "+currentUser.jwt}});
+        ? await axios.put(`https://youtube-yg41.onrender.com/api/users/unsub/${channel._id}`,{headers:{Authorization:"Bearer "+currentUser.jwt}})
+        : await axios.put(`https://youtube-yg41.onrender.com/api/users/sub/${channel._id}`,{headers:{Authorization:"Bearer "+currentUser.jwt}});
       dispatch(subscription(channel._id));
     } catch (err) {
       console.log(err);

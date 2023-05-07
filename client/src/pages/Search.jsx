@@ -25,7 +25,7 @@ const Search = () => {
 
   const fetchVideos = async () => {
     try {
-      const res = await axios.get(`/videos/search${query}`);
+      const res = await axios.get(`https://youtube-yg41.onrender.com/api/videos/search${query}`);
       setVideos(res.data);
     } catch (err) {
       console.log(err);

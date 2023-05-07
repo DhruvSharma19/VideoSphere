@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { format } from "timeago.js";
 import axios from "axios";
+import { useSelector } from "react-redux";
 
 const Container = styled.div`
   width: 100%;
@@ -86,10 +87,11 @@ const Major = styled.div`
 
 const Card = ({ type, video }) => {
   const [channel, setChannel] = useState({});
+  const {currentUser}=useSelector((state)=>state.user);
 
   const handleView = async () => {
     try {
-      await axios.put("/videos/view/" + video._id,{headers:{Authorization:"Bearer "+currentUser.jwt}});
+      await axios.put("https://youtube-yg41.onrender.com/api/videos/view/" + video._id,{headers:{Authorization:"Bearer "+currentUser.jwt}});
     } catch (err) {
       console.log(err);
     }
@@ -97,7 +99,7 @@ const Card = ({ type, video }) => {
 
   const fetchChannel = async () => {
     try {
-      const res = await axios.get(`/users/find/${video.userId}`);
+      const res = await axios.get(`https://youtube-yg41.onrender.com/api/users/find/${video.userId}`);
       setChannel(res.data);
     } catch (err) {
       console.log(err);

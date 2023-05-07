@@ -138,8 +138,8 @@ const Profile = () => {
 
   const fetchData = async () => {
     try {
-      const channelRes = await axios.get(`/users/find/${path}`);
-      const videoRes = await axios.get(`/videos/profile/${path}`);
+      const channelRes = await axios.get(`https://youtube-yg41.onrender.com/api/users/find/${path}`);
+      const videoRes = await axios.get(`https://youtube-yg41.onrender.com/api/videos/profile/${path}`);
       setVideos(videoRes.data);
       setChannel(channelRes.data);
     } catch (err) {
@@ -153,8 +153,8 @@ const Profile = () => {
   const handleSub = async () => {
     try {
       currentUser.subscribedUsers.includes(channel._id)
-        ? await axios.put(`/users/unsub/${channel._id}`,{headers:{Authorization:"Bearer "+currentUser.jwt}})
-        : await axios.put(`/users/sub/${channel._id}`,{headers:{Authorization:"Bearer "+currentUser.jwt}});
+        ? await axios.put(`https://youtube-yg41.onrender.com/api/users/unsub/${channel._id}`,{headers:{Authorization:"Bearer "+currentUser.jwt}})
+        : await axios.put(`https://youtube-yg41.onrender.com/api/users/sub/${channel._id}`,{headers:{Authorization:"Bearer "+currentUser.jwt}});
       dispatch(subscription(channel._id));
     } catch (err) {
       console.log(err);
