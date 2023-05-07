@@ -17,7 +17,7 @@ router.delete("/:id",verifyToken, deleteVideo );
 router.get("/find/:id", getVideo );
 
 
-router.put("/view/:id",verifyToken, addView );
+router.put("/view/:id", addView );
 
 router.get("/trend", trend );
 
