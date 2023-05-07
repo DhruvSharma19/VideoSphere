@@ -9,6 +9,7 @@ import {
 import app from "../firebase";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import {useSelector} from "react-redux"
 
 const Container = styled.div`
   position: absolute;
@@ -122,6 +123,7 @@ const Upload = ({ setOpen }) => {
   const [videoPerc, setVideoPerc] = useState(0);
   const [inputs, setInputs] = useState({});
   const [tags, setTags] = useState([]);
+  const {currentUser}=useSelector((state)=>state.user);
 
   const navigate = useNavigate();
 
