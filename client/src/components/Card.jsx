@@ -87,7 +87,6 @@ const Major = styled.div`
 
 const Card = ({ type, video }) => {
   const [channel, setChannel] = useState({});
-  const {currentUser}=useSelector((state)=>state.user);
 
   const handleView = async () => {
     try {
