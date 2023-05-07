@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { format } from "timeago.js";
+import {useSelector} from "react-redux"
 
 const Container = styled.div`
   width: 100%;
@@ -120,11 +121,12 @@ const Desc = styled.div`
 `;
 
 const SearchCard = ({ video }) => {
+  const {currentUser}=useSelector((state)=>state.user);
   const [channel, setChannel] = useState({});
 
   const handleView = async () => {
     try {
-      await axios.put("/videos/view/" + video._id);
+      await axios.put("/videos/view/" + video._id,{headers:{Authorization:"Bearer "+currentUser.jwt}});
     } catch (err) {
       console.log(err);
     }

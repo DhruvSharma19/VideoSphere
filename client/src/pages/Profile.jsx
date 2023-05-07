@@ -153,8 +153,8 @@ const Profile = () => {
   const handleSub = async () => {
     try {
       currentUser.subscribedUsers.includes(channel._id)
-        ? await axios.put(`/users/unsub/${channel._id}`)
-        : await axios.put(`/users/sub/${channel._id}`);
+        ? await axios.put(`/users/unsub/${channel._id}`,{headers:{Authorization:"Bearer "+currentUser.jwt}})
+        : await axios.put(`/users/sub/${channel._id}`,{headers:{Authorization:"Bearer "+currentUser.jwt}});
       dispatch(subscription(channel._id));
     } catch (err) {
       console.log(err);

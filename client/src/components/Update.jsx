@@ -140,7 +140,7 @@ const Update = ({setClose}) => {
   const handleUpload = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.put(`/users/${currentUser._id}`, { ...inputs });
+      const res = await axios.put(`/users/${currentUser._id}`, { ...inputs },{headers:{Authorization:"Bearer "+currentUser.jwt}});
 
       if(img){
 

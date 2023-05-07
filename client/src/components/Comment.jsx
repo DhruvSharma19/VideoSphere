@@ -92,7 +92,7 @@ const Comment = ({ comment }) => {
 
   const handleComment = async () => {
     try {
-      await axios.delete(`/comments/${comment._id}`);
+      await axios.delete(`/comments/${comment._id}`,{headers:{Authorization:"Bearer "+currentUser.jwt}});
       dispatch(deleteComment(comment._id));
     } catch (err) {
       console.log(err);

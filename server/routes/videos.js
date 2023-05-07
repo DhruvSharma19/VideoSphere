@@ -17,7 +17,7 @@ router.delete("/:id",verifyToken, deleteVideo );
 router.get("/find/:id", getVideo );
 
 
-router.put("/view/:id", addView );
+router.put("/view/:id",verifyToken, addView );
 
 router.get("/trend", trend );
 
@@ -25,7 +25,7 @@ router.get("/trend", trend );
 router.get("/random", random );
 router.get("/music", music );
 router.get("/sport", sport );
-router.get("/movie", movies );
+router.get("/movie", movies ); 
 router.get("/movie", news );
 
 

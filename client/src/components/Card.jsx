@@ -89,7 +89,7 @@ const Card = ({ type, video }) => {
 
   const handleView = async () => {
     try {
-      await axios.put("/videos/view/" + video._id);
+      await axios.put("/videos/view/" + video._id,{headers:{Authorization:"Bearer "+currentUser.jwt}});
     } catch (err) {
       console.log(err);
     }
