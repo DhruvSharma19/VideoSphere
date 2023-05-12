@@ -126,7 +126,7 @@ const SearchCard = ({ video }) => {
 
   const handleView = async () => {
     try {
-      await axios.put("https://youtube-yg41.onrender.com/api/videos/view/" + video._id,{headers:{Authorization:"Bearer "+currentUser.jwt}});
+      await axios.put("https://youtube-yg41.onrender.com/api/videos/view/" + video._id);
     } catch (err) {
       console.log(err);
     }
