@@ -58,7 +58,7 @@ const Comments = ({ videoId }) => {
         userId: currentUser._id,
         videoId: videoId,
         desc: text,
-      },{},{headers:{Authorization:"Bearer "+currentUser.jwt}});
+      },{headers:{Authorization:"Bearer "+currentUser.jwt}});
       dispatch(addComment(res.data));
     } catch (err) {
       console.log(err);
