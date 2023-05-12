@@ -64,7 +64,7 @@ const Title = styled.h1`
 
 const Input = styled.input`
   width: 100%;
-  border: 1px solid ${({ theme }) => theme.soft};
+  border: 1px solid ${({ theme }) => theme.text};
   color: ${({ theme }) => theme.text};
   border-radius: 3px;
   padding: 10px;
