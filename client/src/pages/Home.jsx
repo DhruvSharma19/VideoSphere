@@ -23,7 +23,7 @@ const Container = styled.div`
     padding: 10px;
   }
 `;
-
+ 
 const Home = ({ type }) => {
   const [videos, setVideos] = useState([]);
 

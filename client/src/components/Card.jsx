@@ -21,7 +21,7 @@ const Container = styled.div`
   height: 100%;
   animation: fadein 0.3s;
 
-  &:hover {
+  &:hover { 
     background-color: ${({ theme }) => theme.bgLighter};
   }
 
