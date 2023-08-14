@@ -74,6 +74,25 @@ const Input = styled.input`
   padding: 10px;
   box-sizing: border-box;
   font-size: 20px;
+  display: none;
+
+  &:hover {
+    cursor: pointer;
+  }
+`;
+
+const Media = styled.input`
+  width: 100%;
+  border: 1px solid ${({ theme }) => theme.text};
+  color: ${({ theme }) => theme.text};
+  border-radius: 3px;
+  padding: 10px;
+  background-color: transparent;
+  z-index: 999;
+  border-radius: 20px;
+  padding: 10px;
+  box-sizing: border-box;
+  font-size: 20px;
 
   &:hover {
     cursor: pointer;
@@ -212,7 +231,7 @@ const Upload = ({ setOpen }) => {
             onChange={(e) => setVideo(e.target.files[0])}
           />
         )}
-        <Input
+        <Media
           type="text"
           placeholder="Title"
           name="title"
@@ -225,7 +244,7 @@ const Upload = ({ setOpen }) => {
           onChange={handleChange}
         />
 
-        <Input
+        <Media
           type="text"
           placeholder="Separate the tags with commas."
           onChange={handleTags}
