@@ -74,7 +74,6 @@ const Input = styled.input`
   padding: 10px;
   box-sizing: border-box;
   font-size: 20px;
-  display: none;
 
   &:hover {
     cursor: pointer;
