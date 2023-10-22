@@ -13,7 +13,7 @@ import cors from "cors"
 const app=express();
 app.use(
     cors({
-        origin:"https://main--loquacious-pixie-1bfcbb.netlify.app"
+        origin:{"https://main--loquacious-pixie-1bfcbb.netlify.app","https://loquacious-pixie-1bfcbb.netlify.app/"}
     })
 )
 app.use(express.json())
