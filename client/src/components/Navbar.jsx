@@ -12,8 +12,8 @@ const Container = styled.div`
   top: 0;
   background-color: ${({ theme }) => theme.bg};
   height: 56px;
-  z-index:200;
-  box-sizing:border-box;
+  z-index: 200;
+  box-sizing: border-box;
   animation: fadein 0.3s;
 `;
 
@@ -29,7 +29,7 @@ const Wrapper = styled.div`
 const Search = styled.div`
   width: 40%;
   height: 60%;
-  
+
   margin: auto;
   display: flex;
   align-items: center;
@@ -48,7 +48,7 @@ const Input = styled.input`
   padding: 2px 5px;
   font-size: larger;
   color: ${({ theme }) => theme.text};
-  padding:8px;
+  padding: 8px;
 `;
 
 const Button = styled.button`
@@ -63,25 +63,23 @@ const Button = styled.button`
   align-items: center;
   gap: 5px;
 
-
   &:hover {
     background-color: blue;
     color: ${({ theme }) => theme.text};
   }
-  
 `;
 
 const User = styled.div`
   display: flex;
   align-items: center;
-  gap: 10px; 
+  gap: 10px;
   font-weight: 500;
   color: ${({ theme }) => theme.text};
 
-  span{
+  span {
     cursor: pointer;
-    @media (max-width:550px){
-      display:none;
+    @media (max-width: 550px) {
+      display: none;
     }
   }
 `;
@@ -95,7 +93,7 @@ const Avatar = styled.img`
 `;
 
 const Navbar = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const [q, setQ] = useState("");
   const { currentUser } = useSelector((state) => state.user);
@@ -108,19 +106,24 @@ const Navbar = () => {
               placeholder="Search"
               onChange={(e) => setQ(e.target.value)}
             />
-            <SearchOutlinedIcon style={{width:"10%",cursor:"pointer"}} onClick={()=>navigate(`/search?q=${q}`)}/>
+            <SearchOutlinedIcon
+              style={{ width: "10%", cursor: "pointer" }}
+              onClick={() => navigate(`/search?q=${q}`)}
+            />
           </Search>
           {currentUser ? (
             <User>
-              <VideoCallOutlinedIcon onClick={() => setOpen(true)} style={{cursor:"pointer"}} />
-              <Avatar src={currentUser.img || '/images/profile.svg'} />
-              <Link to={`/profile/${currentUser._id}`} style={{ textDecoration: "none", color: "inherit"}}>
-              <span>
-
-                {currentUser.name}
-              </span>
+              <VideoCallOutlinedIcon
+                onClick={() => setOpen(true)}
+                style={{ cursor: "pointer" }}
+              />
+              <Avatar src={currentUser.img || "/images/profile.svg"} />
+              <Link
+                to={`/profile/${currentUser._id}`}
+                style={{ textDecoration: "none", color: "inherit" }}
+              >
+                <span>{currentUser.name}</span>
               </Link>
-                
             </User>
           ) : (
             <Link to="signin" style={{ textDecoration: "none" }}>

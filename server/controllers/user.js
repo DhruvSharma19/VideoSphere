@@ -10,7 +10,7 @@ export const update = async (req, res, next) => {
             },
                 { new: true });
             res.status(200).json(updatedUser)
-        } catch (err) { 
+        } catch (err) {
             next(err)
         }
     } else {
@@ -45,12 +45,12 @@ export const getUser = async (req, res, next) => {
 export const subscribe = async (req, res, next) => {
     try {
 
-        const user=await User.findById(req.user.id);
+        const user = await User.findById(req.user.id);
 
-        if(!user.subscribedUsers.includes(req.params.id)){
+        if (!user.subscribedUsers.includes(req.params.id)) {
 
-            
-            
+
+
             await User.findByIdAndUpdate(req.user.id, {
                 $push: { subscribedUsers: req.params.id },
             });
@@ -68,14 +68,14 @@ export const unsubscribe = async (req, res, next) => {
     try {
 
 
-        const user=await User.findById(req.user.id);
-        if(user.subscribedUsers.includes(req.params.id)){
+        const user = await User.findById(req.user.id);
+        if (user.subscribedUsers.includes(req.params.id)) {
 
             await User.findByIdAndUpdate(req.user.id, {
                 $pull: { subscribedUsers: req.params.id }
             });
-            
-            
+
+
             await User.findByIdAndUpdate(req.params.id, {
                 $inc: { subscribers: -1 },
             });
@@ -99,7 +99,7 @@ export const like = async (req, res, next) => {
     } catch (err) {
         next(err)
     }
- 
+
 }
 export const dislike = async (req, res, next) => {
     const id = req.user.id;

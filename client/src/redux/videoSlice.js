@@ -3,8 +3,8 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   currentVideo: null,
   loading: false,
-  error: false, 
-}; 
+  error: false,
+};
 
 export const videoSlice = createSlice({
   name: "video",
@@ -15,14 +15,14 @@ export const videoSlice = createSlice({
     },
     fetchSuccess: (state, action) => {
       state.loading = false;
-      state.currentVideo =  action.payload;
+      state.currentVideo = action.payload;
     },
     fetchFailure: (state) => {
       state.loading = false;
       state.error = true;
     },
     like: (state, action) => {
-      if (!state.currentVideo.likes.includes(action.payload)) { 
+      if (!state.currentVideo.likes.includes(action.payload)) {
         state.currentVideo.likes.push(action.payload);
         state.currentVideo.dislikes.splice(
           state.currentVideo.dislikes.findIndex(
@@ -43,14 +43,14 @@ export const videoSlice = createSlice({
         );
       }
     },
-    view:(state,action)=>{
-      state.loading=false;
-      state.currentUser=action.payload;
+    view: (state, action) => {
+      state.loading = false;
+      state.currentUser = action.payload;
     }
   },
 });
 
-export const { fetchStart, fetchSuccess, fetchFailure, like, dislike,view } =
+export const { fetchStart, fetchSuccess, fetchFailure, like, dislike, view } =
   videoSlice.actions;
 
 export default videoSlice.reducer;

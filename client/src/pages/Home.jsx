@@ -23,13 +23,15 @@ const Container = styled.div`
     padding: 10px;
   }
 `;
- 
+
 const Home = ({ type }) => {
   const [videos, setVideos] = useState([]);
 
   const fetchVideos = async () => {
     try {
-      const res = await axios.get(`https://youtube-yg41.onrender.com/api/videos/${type}`);
+      const res = await axios.get(
+        `https://youtube-yg41.onrender.com/api/videos/${type}`
+      );
       setVideos(res.data);
     } catch (err) {
       console.log(err);

@@ -21,7 +21,7 @@ const Container = styled.div`
   height: 100%;
   animation: fadein 0.3s;
 
-  &:hover { 
+  &:hover {
     background-color: ${({ theme }) => theme.bgLighter};
   }
 
@@ -90,7 +90,9 @@ const Card = ({ type, video }) => {
 
   const handleView = async () => {
     try {
-      await axios.put("https://youtube-yg41.onrender.com/api/videos/view/" + video._id);
+      await axios.put(
+        "https://youtube-yg41.onrender.com/api/videos/view/" + video._id
+      );
     } catch (err) {
       console.log(err);
     }
@@ -98,7 +100,9 @@ const Card = ({ type, video }) => {
 
   const fetchChannel = async () => {
     try {
-      const res = await axios.get(`https://youtube-yg41.onrender.com/api/users/find/${video.userId}`);
+      const res = await axios.get(
+        `https://youtube-yg41.onrender.com/api/users/find/${video.userId}`
+      );
       setChannel(res.data);
     } catch (err) {
       console.log(err);

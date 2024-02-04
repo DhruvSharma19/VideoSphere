@@ -5,12 +5,11 @@ import Card from "./Card";
 
 const Container = styled.div`
   flex: 2;
-  box-sizing:border-box;
-  display:grid;
-  grid-template-rows:repeat(auto-fit,170px);
-  gap:10px;
+  box-sizing: border-box;
+  display: grid;
+  grid-template-rows: repeat(auto-fit, 170px);
+  gap: 10px;
   animation: fadein 0.3s;
-  
 `;
 
 const Recommendation = ({ tags }) => {
@@ -18,7 +17,9 @@ const Recommendation = ({ tags }) => {
 
   useEffect(() => {
     const fetchVideos = async () => {
-      const res = await axios.get(`https://youtube-yg41.onrender.com/api/videos/tags?tags=${tags}`);
+      const res = await axios.get(
+        `https://youtube-yg41.onrender.com/api/videos/tags?tags=${tags}`
+      );
       setVideos(res.data);
     };
     fetchVideos();

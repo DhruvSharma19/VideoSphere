@@ -135,8 +135,11 @@ const Signin = () => {
 
     dispatch(loginStart());
     try {
-      const res = await axios.post("https://youtube-yg41.onrender.com/api/auth/signin", { name, password });
-      dispatch(loginSuccess({...res.data.others,jwt:res.data.jwt}));
+      const res = await axios.post(
+        "https://youtube-yg41.onrender.com/api/auth/signin",
+        { name, password }
+      );
+      dispatch(loginSuccess({ ...res.data.others, jwt: res.data.jwt }));
       navigate("/random");
     } catch (err) {
       dispatch(loginFailure());
@@ -154,7 +157,7 @@ const Signin = () => {
             img: result.user.photoURL,
           })
           .then((res) => {
-            dispatch(loginSuccess({...res.data.others,jwt:res.data.jwt}));
+            dispatch(loginSuccess({ ...res.data.others, jwt: res.data.jwt }));
             navigate("/random");
           });
       })
@@ -168,8 +171,11 @@ const Signin = () => {
 
     dispatch(SignUpStart());
     try {
-      const res = await axios.post("https://youtube-yg41.onrender.com/api/auth/signup", { name, email, password });
-      dispatch(SignUpSuccess({...res.data.others,jwt:res.data.jwt}));
+      const res = await axios.post(
+        "https://youtube-yg41.onrender.com/api/auth/signup",
+        { name, email, password }
+      );
+      dispatch(SignUpSuccess({ ...res.data.others, jwt: res.data.jwt }));
       navigate("/random");
     } catch (err) {
       dispatch(SignUpFailure());

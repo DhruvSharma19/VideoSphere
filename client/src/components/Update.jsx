@@ -57,9 +57,8 @@ const Wrapper = styled.div`
       cursor: pointer;
     }
 
-    span{
-        font-size: 20px;
-
+    span {
+      font-size: 20px;
     }
   }
 
@@ -76,23 +75,21 @@ const Wrapper = styled.div`
   }
 `;
 
-
-const Close=styled.img`
+const Close = styled.img`
   height: 30px;
   width: 30px;
   cursor: pointer;
   position: absolute;
   top: 5px;
   right: 5px;
-
 `;
 
-const Update = ({setClose}) => {
+const Update = ({ setClose }) => {
   const [img, setImg] = useState(undefined);
   const [banner, setBanner] = useState(undefined);
   const [imgPerc, setImgPerc] = useState(0);
   const [bannerPerc, setBannerPerc] = useState(0);
-  const {currentUser}=useSelector((state)=>state.user);
+  const { currentUser } = useSelector((state) => state.user);
 
   const [inputs, setInputs] = useState({});
 
@@ -134,23 +131,23 @@ const Update = ({setClose}) => {
     );
   };
 
-
-
-
   const handleUpload = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.put(`https://youtube-yg41.onrender.com/api/users/${currentUser._id}`, { ...inputs },{headers:{Authorization:"Bearer "+currentUser.jwt}});
+      const res = await axios.put(
+        `https://youtube-yg41.onrender.com/api/users/${currentUser._id}`,
+        { ...inputs },
+        { headers: { Authorization: "Bearer " + currentUser.jwt } }
+      );
 
-      if(img){
-
+      if (img) {
         dispatch(imgUrl(res.data.img));
       }
-      if(banner){
-        dispatch(bannerUrl(res.data.banner))
+      if (banner) {
+        dispatch(bannerUrl(res.data.banner));
       }
-      setImg(undefined)
-      setBanner(undefined)
+      setImg(undefined);
+      setBanner(undefined);
       setBannerPerc(0);
       setImgPerc(0);
       setInputs({});
@@ -170,10 +167,10 @@ const Update = ({setClose}) => {
   return (
     <Container>
       <Wrapper>
-        <Close src="/images/close.svg" alt="" onClick={()=>setClose(0)}/>
+        <Close src="/images/close.svg" alt="" onClick={() => setClose(0)} />
         <h3>Update</h3>
         <div>
-          <span>User Image: {imgPerc>0?imgPerc+"%":""} </span>
+          <span>User Image: {imgPerc > 0 ? imgPerc + "%" : ""} </span>
           <label htmlFor="image">
             <input
               type="file"
@@ -185,13 +182,13 @@ const Update = ({setClose}) => {
           </label>
         </div>
         <div>
-        <input
-              type="file"
-              id="banner"
-              accept="image/*"
-              onChange={(e) => setBanner(e.target.files[0])}
-            />
-          <span>Banner Image:{bannerPerc>0?bannerPerc +"%":""}</span>
+          <input
+            type="file"
+            id="banner"
+            accept="image/*"
+            onChange={(e) => setBanner(e.target.files[0])}
+          />
+          <span>Banner Image:{bannerPerc > 0 ? bannerPerc + "%" : ""}</span>
           <label htmlFor="banner">
             <img src="/images/image.svg" alt="" />
           </label>

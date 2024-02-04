@@ -92,7 +92,10 @@ const Comment = ({ comment }) => {
 
   const handleComment = async () => {
     try {
-      await axios.delete(`https://youtube-yg41.onrender.com/api/comments/${comment._id}`,{headers:{Authorization:"Bearer "+currentUser.jwt}});
+      await axios.delete(
+        `https://youtube-yg41.onrender.com/api/comments/${comment._id}`,
+        { headers: { Authorization: "Bearer " + currentUser.jwt } }
+      );
       dispatch(deleteComment(comment._id));
     } catch (err) {
       console.log(err);
@@ -101,7 +104,9 @@ const Comment = ({ comment }) => {
 
   const fetchComment = async () => {
     try {
-      const res = await axios.get(`https://youtube-yg41.onrender.com/api/users/find/${comment.userId}`);
+      const res = await axios.get(
+        `https://youtube-yg41.onrender.com/api/users/find/${comment.userId}`
+      );
       setChannel(res.data);
     } catch (err) {
       console.log(err);

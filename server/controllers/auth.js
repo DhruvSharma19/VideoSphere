@@ -1,28 +1,28 @@
 import User from "../models/User.js";
 import bcrypt from "bcryptjs";
 import { createError } from "../error.js";
-import jwt from "jsonwebtoken" 
- 
- 
+import jwt from "jsonwebtoken"
+
+
 
 export const signup = async (req, res, next) => {
     try {
         const salt = bcrypt.genSaltSync(10);
         const hash = bcrypt.hashSync(req.body.password, salt);
         const newUser = new User({ ...req.body, password: hash });
-        const savedUser=await newUser.save();
+        const savedUser = await newUser.save();
 
 
         const { password, ...others } = newUser._doc;
 
         const token = jwt.sign({ id: newUser._id }, process.env.JWT)
 
-        
+
 
         res.cookie("access_token", token, {
             httpOnly: true,
-        }).status(200).json({others:savedUser,jwt:token});
-        
+        }).status(200).json({ others: savedUser, jwt: token });
+
     } catch (err) {
         next(err);
     }
@@ -45,7 +45,7 @@ export const signin = async (req, res, next) => {
 
         res.cookie("access_token", token, {
             httpOnly: true,
-        }).status(200).json({others:others,jwt:token});
+        }).status(200).json({ others: others, jwt: token });
 
     }
     catch (err) {
@@ -69,7 +69,7 @@ export const googleAuth = async (req, res, next) => {
             }).status(200).json(user._doc);
         } else {
             const newUser = new User({
-                ...req.body, 
+                ...req.body,
                 fromGoogle: true
             })
             const savedUser = await newUser.save();
@@ -78,7 +78,7 @@ export const googleAuth = async (req, res, next) => {
 
             res.cookie("access_token", token, {
                 httpOnly: true
-            }).status(200).json({others:savedUser._doc,jwt:token});
+            }).status(200).json({ others: savedUser._doc, jwt: token });
         }
 
     } catch (arr) {

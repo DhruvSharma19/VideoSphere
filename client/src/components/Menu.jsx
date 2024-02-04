@@ -15,17 +15,14 @@ import {
   LightMode,
   AccountCircleOutlined,
 } from "@mui/icons-material";
-import {auth} from "../firebase";
+import { auth } from "../firebase";
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
-import LogoutIcon from '@mui/icons-material/Logout';
+import LogoutIcon from "@mui/icons-material/Logout";
 import { signOut } from "firebase/auth";
 import { logout } from "../redux/userSlice";
-
-
-
 
 const Container = styled.div`
   flex: 1;
@@ -38,8 +35,8 @@ const Container = styled.div`
   overflow-y: scroll;
   animation: fadein 0.3s;
 
-  @media (max-width:768px){
-    display:none;
+  @media (max-width: 768px) {
+    display: none;
   }
 
   &::-webkit-scrollbar {
@@ -47,7 +44,7 @@ const Container = styled.div`
   }
   &::-webkit-scrollbar-track {
     background-color: #f1f1f1;
-  } 
+  }
   &::-webkit-scrollbar-thumb {
     background-color: rgb(179, 179, 179);
   }
@@ -60,10 +57,9 @@ const Wrapper = styled.div`
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  
 `;
 
-const Logo = styled.div` 
+const Logo = styled.div`
   display: flex;
   align-items: center;
   font-size: 25px;
@@ -71,8 +67,6 @@ const Logo = styled.div`
   font-weight: bold;
   margin-bottom: 25px;
   cursor: pointer;
-
- 
 `;
 
 const Img = styled.img`
@@ -84,7 +78,7 @@ const Item = styled.div`
   align-items: center;
   gap: 8px;
   cursor: pointer;
-  padding:10px;
+  padding: 10px;
   box-sizing: border-box;
   font-size: 20px;
   transition: 0.1s all;
@@ -131,35 +125,30 @@ const Title = styled.h2`
 const Menu = ({ darkMode, setDarkMode }) => {
   const { currentUser } = useSelector((state) => state.user);
 
-  const dispatch=useDispatch();
-  const navigate=useNavigate();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-
-  const handleAuth=async()=>{
-    try{
+  const handleAuth = async () => {
+    try {
       if (currentUser.fromGoogle) {
         signOut(auth)
           .then(() => {
             dispatch(logout());
-            navigate("/home/random")
-           
+            navigate("/home/random");
           })
           .catch((err) => {
             console.log(err);
           });
       } else {
         dispatch(logout());
-        navigate("/random")
-       
+        navigate("/random");
       }
-    }
-    catch(err){
+    } catch (err) {
       console.log(err);
     }
-  }
-  
+  };
+
   return (
-    
     <Container>
       <Wrapper>
         <Link to="random" style={{ textDecoration: "none", color: "inherit" }}>
@@ -170,13 +159,13 @@ const Menu = ({ darkMode, setDarkMode }) => {
         </Link>
         <Link to="random" style={{ textDecoration: "none", color: "inherit" }}>
           <Item>
-            <Home style={{color:"orange"}} />
+            <Home style={{ color: "orange" }} />
             Home
           </Item>
         </Link>
         <Link to="trends" style={{ textDecoration: "none", color: "inherit" }}>
           <Item>
-            <Explore style={{color:"red"}}/>
+            <Explore style={{ color: "red" }} />
             Explore
           </Item>
         </Link>
@@ -185,7 +174,7 @@ const Menu = ({ darkMode, setDarkMode }) => {
           style={{ textDecoration: "none", color: "inherit" }}
         >
           <Item>
-            <Subscriptions style={{color:"green"}}/>
+            <Subscriptions style={{ color: "green" }} />
             Subscriptions
           </Item>
         </Link>
@@ -205,47 +194,44 @@ const Menu = ({ darkMode, setDarkMode }) => {
           </>
         )}
         <Link to="music" style={{ textDecoration: "none", color: "inherit" }}>
-        <Item>
-          <LibraryMusic style={{color:"darkblue"}}/>
-          Music
-        </Item>
+          <Item>
+            <LibraryMusic style={{ color: "darkblue" }} />
+            Music
+          </Item>
         </Link>
         <Link to="sports" style={{ textDecoration: "none", color: "inherit" }}>
-        <Item>
-          <Sports style={{color:"blueviolet"}}/>
-          Sports
-        </Item>
+          <Item>
+            <Sports style={{ color: "blueviolet" }} />
+            Sports
+          </Item>
         </Link>
         <Link to="movies" style={{ textDecoration: "none", color: "inherit" }}>
-
-        
-        <Item>
-          <Movie style={{color:"purple"}}/>
-          Movies
-        </Item>
+          <Item>
+            <Movie style={{ color: "purple" }} />
+            Movies
+          </Item>
         </Link>
         <Link to="news" style={{ textDecoration: "none", color: "inherit" }}>
-
-        <Item>
-          <Newspaper style={{color:"lightblue"}}/>
-          News
-        </Item>
+          <Item>
+            <Newspaper style={{ color: "lightblue" }} />
+            News
+          </Item>
         </Link>
         <Hr />
         <Item>
-          <Settings style={{color:"darkgreen"}}/>
+          <Settings style={{ color: "darkgreen" }} />
           Settings
         </Item>
-        <Item onClick={handleAuth} >
-          <LogoutIcon style={{color:"aqua"}}/>
+        <Item onClick={handleAuth}>
+          <LogoutIcon style={{ color: "aqua" }} />
           LogOut
         </Item>
         <Item>
-          <Report style={{color:"pink"}}/>
+          <Report style={{ color: "pink" }} />
           Report
         </Item>
         <Item>
-          <Help style={{color:"orange"}}/>
+          <Help style={{ color: "orange" }} />
           Help
         </Item>
         <Item onClick={() => setDarkMode(!darkMode)}>
